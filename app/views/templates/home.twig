@@ -1,0 +1,54 @@
+{% extends "templates/base.twig" %}
+{% block body %}
+{% if role %}
+<button type="button" class="btn btn-primary add" id="add" onclick="add()">ADD</button>
+{% else %}
+<button
+      type="button"
+      class="btn btn-info filter"
+      id="history"
+      onclick="posthistory()"
+    >History</button>
+{% endif %} 
+     <button
+      type="button"
+      class="btn btn-info filter"
+      id="filter"
+      onclick="searchto()"
+    >Search</button>
+ <div class="table-users"><div class="header">Books
+</div>
+<table cellspacing="0">
+  <tr>
+    <th>Name</th>
+    <th>Number</th>
+    <th>Availiability</th>
+    <th></th>
+  </tr>
+  {% for book in books %} 
+   <tr id={{book.id}}>
+      <td>{{book.bookname}}</td>
+      <td>{{book.number}}</td>
+      {% if book.avail %}
+        <td>Availiable</td>
+      {% else %}
+        <td>Unavailiable</td>
+      {% endif %}
+      <td id="action">{% if role %}<button
+            type="button"
+            class="btn btn-danger"
+            id="btn"
+            onclick="checkId({{book.id}},{{book.avail}})"
+          >Change State</button>
+        {% else %}
+          <button
+            type="button"
+            class="btn btn-success"
+            id="btn"
+            onclick="getId({{book.id}})"
+          >Checkout</button>
+          {% endif %}
+          </td>
+    </tr>
+    {% endfor %}
+{% endblock %}
