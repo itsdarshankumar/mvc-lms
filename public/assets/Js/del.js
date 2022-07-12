@@ -13,11 +13,9 @@ function postbutton(element, avail) {
   } else {
     avail = 1;
   }
+  const json = JSON.stringify({id: element,avail:avail});
   axios
-    .post("/book/admin/update", {
-      id: element,
-      avail: avail,
-    })
+    .post("/book/admin/update",json)
     .then((res) => {
       console.log(res);
       window.location.href = "http://localhost:8000/book";

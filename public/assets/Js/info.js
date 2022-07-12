@@ -77,13 +77,4 @@ function posthistory() {
   window.location.href="http://localhost:8000/book/history"
 }
 
-// function postfilter(tag) {
-//   axios
-//     .post("/acad/filteracad", {
-//       tag: `${tag}`,
-//     })
-//     .then((res) => {
-//       console.log(res);
-//       window.location.href = "http://localhost:5000/acad/filterviewacad";
-//     });
-// }
+

@@ -1,0 +1,36 @@
+{% extends "templates/base.twig" %}
+{% block body %}
+
+<div class="header">History
+</div>
+<table cellspacing="0">
+  <tr>
+    <th>Username</th>
+    <th>BookId</th>
+    <th>Status</th>
+  </tr>
+  {% for row in history %}
+    <tr id={{row.id}}>
+      <td>{{row.username}}</td>
+      <td>{{row.bookid}}</td>
+      <td style="text-align:center">
+        {% if row.status == 2 %}
+          Pending
+        {% endif %}
+        {% if row.status == 1 %}
+          {% if row.returned %}
+            Returned
+          {% else %}
+            Accepted
+          {% endif %}
+        {% endif %}
+        {% if row.status == 0 %}
+          Rejected
+        {% endif %}
+
+      </td>
+    </tr>
+  {% endfor %}
+</table>
+
+{% endblock %}

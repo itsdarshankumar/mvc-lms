@@ -33,12 +33,12 @@
       {% if req.status == 1 %}
         {% if req.returned %}
           <td style="text-align: center;">Returned</td>
-        {{else}}
+        {% else %}
           <td id="action"><button
               type="button"
               class="btn btn-success"
               id="btn"
-              onclick="returned({{this.id}},{{this.bookid}})"
+              onclick="returned({{req.id}},{{req.bookid}})"
             >Return</button></td>
         {% endif %}
       {% endif %}
