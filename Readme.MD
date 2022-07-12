@@ -26,7 +26,7 @@ MVC-LMS is a Library Management website on MVC Architecture. The web based app i
     ```
 - Import schema present in `schema/schema.sql` in your database using:
     ```console
-    >mysql -u root -p [DB_NAME] < C:\Users\user_name\Downloads\schema.sql
+    > mysql -u root -p [DB_NAME] < C:\Users\user_name\Downloads\schema.sql
     ```
 - Serve the public folder at any port (say 8000):
     ```console
