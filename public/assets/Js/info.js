@@ -64,11 +64,9 @@ function filter(message) {
 }
 
 function postmessage(book, number) {
+  const json = JSON.stringify({bookname: book,number : number})
   axios
-    .post("/book/admin/add", {
-      bookname: `${book}`,
-      number: `${number}`,
-    })
+    .post("/book/admin/add", json)
     .then((res) => {
       window.location.href = "http://localhost:8000/book";
       console.log(res);

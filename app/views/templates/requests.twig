@@ -1,0 +1,48 @@
+{% extends "templates/reqlayout.twig" %}
+
+{% block body %}
+<div class="header">Pending Requests
+</div>
+<table cellspacing="0">
+  <tr>
+    <th>Username</th>
+    <th>BookId</th>
+    <th></th>
+  </tr>
+  {% for req in requests %}
+    <tr id={{req.id}}>
+      <td>{{req.username}}</td>
+      <td>{{req.bookid}}</td>
+      {% if req.status == 2 %}
+        <td id="action"><button
+            type="button"
+            class="btn btn-danger"
+            id="btn"
+            onclick="checkingId({{req.id}},{{req.bookid}})"
+          >Deny</button>
+          <button
+            type="button"
+            class="btn btn-success"
+            id="btn"
+            onclick="gettingId({{req.id}},{{req.bookid}})"
+          >Approve</button></td>
+      {% endif %}
+      {% if req.status == 0 %}
+        <td style="text-align: center;">Denied</td>
+      {% endif %}
+      {% if req.status == 1 %}
+        {% if req.returned %}
+          <td style="text-align: center;">Returned</td>
+        {{else}}
+          <td id="action"><button
+              type="button"
+              class="btn btn-success"
+              id="btn"
+              onclick="returned({{this.id}},{{this.bookid}})"
+            >Return</button></td>
+        {% endif %}
+      {% endif %}
+    </tr>
+  {% endfor %}
+</table>
+{% endblock %}
