@@ -62,13 +62,11 @@ async function checkconfirm(element) {
 }
 
 function postcheck(element) {
-  console.log("request")
+  console.log(element)
+  const json = JSON.stringify({bookid: element});
   axios
-    .post("/book", {
-      bookid: element,
-    })
+    .post("/book", json)
     .then((res) => {
       console.log(res);
-      window.location.href = "http://localhost:8000/book";
     });
 }

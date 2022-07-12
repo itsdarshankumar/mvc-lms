@@ -13,10 +13,13 @@ class Login
     {
         $username = $_POST["username"];
         $pass = $_POST["pass"];
-        if (\Postlogin\Login::login($username, $pass)) {
-            $role = $_SESSION["role"];
+        $rows = \Postlogin\Login::login($username,$pass);
+        if ($rows) {
+            session_start();
+            $_SESSION["username"] = $username;
+            $_SESSION["role"] = $rows[0]["role"];
             echo \View\Loader::make()->render("templates/home.twig", array(
-                "books" => \Postlogin\Login::get_all($role),
+                "books" => \Postlogin\Login::get_all($_SESSION["role"]),
                 "role"  => $_SESSION["role"]
             ));
         } else {
@@ -36,9 +39,12 @@ class Book
         ));
     }
     public function post()
-    {
+    {   session_start();
+        $_POST = json_decode(file_get_contents("php://input"), true);
         $bookid = $_POST["bookid"];
         $username = $_SESSION["username"];
+        echo var_dump($_POST);
+        echo var_dump($bookid);
         if (\Postlogin\Login::checkout($username, $bookid)) {
             echo "Checkout successfull";
         } else {

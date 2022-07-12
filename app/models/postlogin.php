@@ -15,10 +15,7 @@ class Login
         $rows = $stmt->fetchAll();
         if ($rows) {
             if ($bcrypt->verify($pass, $rows[0]["pass"])) {
-                session_start();
-                $_SESSION["username"] = $username;
-                $_SESSION["role"] = $rows[0]["role"];
-                return true;
+            return $rows;
             }
         }
         return false;
@@ -42,7 +39,7 @@ class Login
     }
 
     public static function checkout($username,$bookid)
-    {
+    {   
         $db = \DB::get_instance();
         $stmt = $db->prepare("SELECT * FROM books WHERE id = ? AND avail=1");
         $stmt->execute([$bookid]);
