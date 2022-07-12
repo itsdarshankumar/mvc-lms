@@ -1,4 +1,4 @@
-# LMS
+# MVC-LMS
 
 This is the repository for my submission of MVC assignment
 
