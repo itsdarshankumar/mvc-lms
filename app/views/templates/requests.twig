@@ -6,13 +6,13 @@
 <table cellspacing="0">
   <tr>
     <th>Username</th>
-    <th>BookId</th>
+    <th>Book</th>
     <th></th>
   </tr>
   {% for req in requests %}
     <tr id={{req.id}}>
       <td>{{req.username}}</td>
-      <td>{{req.bookid}}</td>
+      <td>{{req.bookname}}</td>
       {% if req.status == 2 %}
         <td id="action"><button
             type="button"

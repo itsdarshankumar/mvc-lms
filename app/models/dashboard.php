@@ -57,7 +57,7 @@ class Dashboard
     public static function userresolved($username)
     {
         $db = \DB::get_instance();
-        $stmt = $db->prepare("SELECT * FROM requests WHERE username=? ORDER BY id DESC");
+        $stmt = $db->prepare("SELECT requests.bookid,requests.username,requests.status,requests.returned,books.bookname FROM requests INNER JOIN books ON requests.bookid=books.id WHERE username=? ORDER BY requests.id DESC");
         $stmt->execute([$username]);
         $rows = $stmt->fetchAll();
         return $rows;

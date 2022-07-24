@@ -1,18 +1,24 @@
 {% extends "templates/homelayout.twig" %}
 {% block body %}
+<button
+      type="button"
+      class="btn btn-info filter"
+      id="history"
+      onclick="userHistory()"
+    >Filter</button>
 
 <div class="header">History
 </div>
 <table cellspacing="0">
   <tr>
     <th>Username</th>
-    <th>BookId</th>
+    <th>Book</th>
     <th>Status</th>
   </tr>
   {% for row in history %}
     <tr id={{row.id}}>
       <td>{{row.username}}</td>
-      <td>{{row.bookid}}</td>
+      <td>{{row.bookname}}</td>
       <td style="text-align:center">
         {% if row.status == 2 %}
           Pending

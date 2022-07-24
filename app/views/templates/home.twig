@@ -41,7 +41,7 @@
             id="btn"
             onclick="checkId({{book.id}},{{book.avail}})"
           >Change State</button>
-        {% else %}
+        {% elseif book.avail %}
           <button
             type="button"
             class="btn btn-success"
