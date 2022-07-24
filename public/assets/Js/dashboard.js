@@ -48,21 +48,21 @@ async function checkoutConfirm(element) {
     confirmButtonText: "Yes, go ahead!",
   });
   if (result.isConfirmed) {
-
-    Swal.fire("Done!", "Successful checkout.", "success");
-    checkout(element);
+    const json = JSON.stringify({bookid: element});
+   await axios
+      .post("/book", json)
+      .then((res) => {
+        console.log(res);
+        if(res.data != "error"){
+          Swal.fire("Done!", "Successful checkout.", "success");}
+          else{
+            Swal.fire ('Incorrect...','You already have this book!', 'error')
+          }
+      });
+      
   }
 }
 
-function checkout(element) {
-  console.log(element)
-  const json = JSON.stringify({bookid: element});
-  axios
-    .post("/book", json)
-    .then((res) => {
-      console.log(res);
-    });
-}
 
 function confirmFilter(){
   (async () => {
