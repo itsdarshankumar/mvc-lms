@@ -57,9 +57,31 @@ class Dashboard
     public static function userresolved($username)
     {
         $db = \DB::get_instance();
-        $stmt = $db->prepare("SELECT requests.bookid,requests.username,requests.status,requests.returned,books.bookname FROM requests INNER JOIN books ON requests.bookid=books.id WHERE username=? ORDER BY requests.id DESC");
+        $stmt = $db->prepare("SELECT requests.bookid,requests.username,requests.status,requests.returned,books.bookname,requests.id FROM requests INNER JOIN books ON requests.bookid=books.id WHERE username=? ORDER BY requests.id DESC");
         $stmt->execute([$username]);
         $rows = $stmt->fetchAll();
         return $rows;
+    }
+    public static function userresolvedfilter($username, $filter)
+    {
+        $db = \DB::get_instance();
+        $stmt = $db->prepare("SELECT requests.bookid,requests.username,requests.status,requests.returned,books.bookname,requests.id  FROM requests INNER JOIN books ON requests.bookid=books.id WHERE username=? AND requests.status=? ORDER BY requests.id DESC");
+        $stmt->execute([$username, $filter]);
+        $rows = $stmt->fetchAll();
+        return $rows;
+    }
+    public static function returnedBooks($username)
+    {
+        $db = \DB::get_instance();
+        $stmt = $db->prepare("SELECT requests.bookid,requests.username,requests.status,requests.returned,books.bookname,requests.id  FROM requests INNER JOIN books ON requests.bookid=books.id WHERE username=? AND requests.returned=1 ORDER BY requests.id DESC");
+        $stmt->execute([$username]);
+        $rows = $stmt->fetchAll();
+        return $rows;
+    }
+    public static function returnRequest($id){
+        $db = \DB::get_instance();
+        $stmt = $db->prepare("UPDATE requests SET returned=2 WHERE id=?");
+        $stmt->execute([$id]);
+        return true;
     }
 }

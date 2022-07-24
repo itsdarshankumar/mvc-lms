@@ -49,12 +49,33 @@ class History
 {
     public function get()
     {
+        \Utils\Auth::userauth();
+        $filter = $_GET['filter'];
         session_start();
         $username = $_SESSION["username"];
-        $rows = \Postlogin\Dashboard::userresolved($username);
+        if ($filter != NULL) {
+            if ($filter != 3) {
+                $rows = \Postlogin\Dashboard::userresolvedfilter($username, $filter);
+            } else {
+                $rows = \Postlogin\Dashboard::returnedBooks($username);
+            }
+        } else {
+            $rows = \Postlogin\Dashboard::userresolved($username);
+        }
 
         echo \View\Loader::make()->render("templates/history.twig", array(
             "history" => $rows
         ));
+    }
+}
+class Returnrequest
+{
+    public function post()
+    {
+        \Utils\Auth::userauth();
+        $_POST = json_decode(file_get_contents("php://input"), true);
+        $id = $_POST["id"];
+        \Postlogin\Dashboard::returnRequest($id);
+        echo 'return requested';
     }
 }

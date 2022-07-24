@@ -31,15 +31,17 @@
         <td style="text-align: center;">Denied</td>
       {% endif %}
       {% if req.status == 1 %}
-        {% if req.returned %}
+        {% if req.returned == 1 %}
           <td style="text-align: center;">Returned</td>
-        {% else %}
+        {% elseif req.returned == 2 %}
           <td id="action"><button
               type="button"
               class="btn btn-success"
               id="btn"
               onclick="returned({{req.id}},{{req.bookid}})"
             >Return</button></td>
+            {% elseif req.returned == 0 %}
+            <td style="text-align: center;">Accepted</td>
         {% endif %}
       {% endif %}
     </tr>

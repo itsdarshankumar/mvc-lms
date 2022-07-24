@@ -4,7 +4,7 @@
       type="button"
       class="btn btn-info filter"
       id="history"
-      onclick="userHistory()"
+      onclick="confirmFilter()"
     >Filter</button>
 
 <div class="header">History
@@ -24,10 +24,17 @@
           Pending
         {% endif %}
         {% if row.status == 1 %}
-          {% if row.returned %}
+          {% if row.returned == 1 %}
             Returned
+          {% elseif row.returned == 0 %}
+            <button
+            type="button"
+            class="btn btn-success"
+            id="btn"
+            onclick="returnRequest({{row.id}})"
+          >Return</button>
           {% else %}
-            Accepted
+           Return req pending
           {% endif %}
         {% endif %}
         {% if row.status == 0 %}

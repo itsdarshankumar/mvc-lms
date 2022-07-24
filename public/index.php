@@ -12,5 +12,6 @@ Toro::serve(array(
     "/book/admin/update" => "\Controller\Adminupdate",
     "/book/admin/return" => "\Controller\Adminreturn",
     "/signup" => "\Controller\Signup",
-    "/logout" => "\Controller\Logout"
+    "/logout" => "\Controller\Logout",
+    "/book/return" => "\Controller\Returnrequest"
 ));

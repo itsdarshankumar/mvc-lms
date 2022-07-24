@@ -58,7 +58,7 @@ class Admindashboard
     public static function bookapprovalrender()
     {
         $db = \DB::get_instance();
-        $stmt = $db->prepare("SELECT requests.bookid,requests.username,requests.status,requests.returned,books.bookname FROM requests INNER JOIN books ON requests.bookid=books.id WHERE status=2");
+        $stmt = $db->prepare("SELECT requests.bookid,requests.username,requests.status,requests.returned,books.bookname,requests.id  FROM requests INNER JOIN books ON requests.bookid=books.id WHERE requests.status=2 OR (requests.status=1 AND requests.returned=2)");
         $stmt->execute();
         $rows = $stmt->fetchAll();
         return $rows;
@@ -81,7 +81,7 @@ class Admindashboard
     public static function pastresolve($username)
     {
         $db = \DB::get_instance();
-        $stmt = $db->prepare("SELECT requests.bookid,requests.username,requests.status,requests.returned,books.bookname FROM requests INNER JOIN books ON requests.bookid=books.id WHERE username=? ORDER BY id DESC");
+        $stmt = $db->prepare("SELECT requests.bookid,requests.username,requests.status,requests.returned,books.bookname,requests.id  FROM requests INNER JOIN books ON requests.bookid=books.id WHERE requests.username=? ORDER BY requests.id DESC");
         $stmt->execute([$username]);
         $rows = $stmt->fetchAll();
         return $rows;
