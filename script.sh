@@ -21,6 +21,10 @@
 	echo 'DB_PASSWORD:'
 	read DB_PASSWORD
 
+	mysql -u $DB_USERNAME -p$DB_PASSWORD -e "CREATE DATABASE $DB_NAME;"
+        
+    mysql -u $DB_USERNAME -p$DB_PASSWORD "$DB_NAME"<./schema/schema.sql
+
 	touch config/config.php
 	echo '<?php'>config/config.php
 	echo '$DB_HOST= '$DB_HOST';'>>config/config.php
