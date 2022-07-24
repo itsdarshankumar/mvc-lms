@@ -1,5 +1,13 @@
 {% extends "templates/homelayout.twig" %}
 {% block title %}Books{% endblock %}
+{% block request %} 
+{% if role %}           
+<li class="nav-item"><a
+    class="nav-link"
+    href="/book/admin"
+    >Requests</a></li>
+    {% endif %}
+{% endblock %}
 {% block body %}
 {% if role %}
 <button type="button" class="btn btn-primary add" id="add" onclick="bookName()">ADD</button>
