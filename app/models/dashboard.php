@@ -18,7 +18,7 @@ class Dashboard
     public static function bookSearch($search)
     {
         $db = \DB::get_instance();
-        $stmt = $db->prepare("SELECT * FROM books WHERE bookname = ?");
+        $stmt = $db->prepare("SELECT * FROM books WHERE bookname LIKE CONCAT( ?,'%')");
         $stmt->execute([$search]);
         $rows = $stmt->fetchAll();
         return $rows;

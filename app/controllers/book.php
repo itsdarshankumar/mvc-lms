@@ -52,12 +52,9 @@ class History
         session_start();
         $username = $_SESSION["username"];
         $rows = \Postlogin\Dashboard::userresolved($username);
-        if ($rows) {
-            echo \View\Loader::make()->render("templates/history.twig", array(
-                "history" => $rows
-            ));
-        } else {
-            echo "error in user-history";
-        }
+
+        echo \View\Loader::make()->render("templates/history.twig", array(
+            "history" => $rows
+        ));
     }
 }
