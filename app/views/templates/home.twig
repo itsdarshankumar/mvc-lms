@@ -1,20 +1,21 @@
-{% extends "templates/base.twig" %}
+{% extends "templates/homelayout.twig" %}
+{% block title %}Books{% endblock %}
 {% block body %}
 {% if role %}
-<button type="button" class="btn btn-primary add" id="add" onclick="add()">ADD</button>
+<button type="button" class="btn btn-primary add" id="add" onclick="bookName()">ADD</button>
 {% else %}
 <button
       type="button"
       class="btn btn-info filter"
       id="history"
-      onclick="posthistory()"
+      onclick="userHistory()"
     >History</button>
 {% endif %} 
      <button
       type="button"
       class="btn btn-info filter"
       id="filter"
-      onclick="searchto()"
+      onclick="searchBook()"
     >Search</button>
  <div class="table-users"><div class="header">Books
 </div>

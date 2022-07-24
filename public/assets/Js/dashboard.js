@@ -1,28 +1,26 @@
-async function checkId(element, avail) {
-  console.log(element);
-  await confirm(element, avail);
+async function checkId(element, availiable) {
+  await confirm(element, availiable);
 }
 async function getId(element) {
-  console.log(element);
-  await checkconfirm(element);
+  await checkoutConfirm(element);
 }
 
-function postbutton(element, avail) {
-  if (avail) {
-    avail = 0;
+function postState(element, availiable) {
+  if (availiable) {
+    availiable = 0;
   } else {
-    avail = 1;
+    availiable = 1;
   }
-  const json = JSON.stringify({id: element,avail:avail});
+  const json = JSON.stringify({id: element,avail:availiable});
   axios
     .post("/book/admin/update",json)
     .then((res) => {
       console.log(res);
-      window.location.href = "http://localhost:8000/book";
+      window.location.href = "/book";
     });
 }
 
-async function confirm(element, avail) {
+async function confirm(element, availiable) {
   let result = await Swal.fire({
     title: "Are you sure?",
     text: "You are changing state of this book",
@@ -33,14 +31,13 @@ async function confirm(element, avail) {
     confirmButtonText: "Yes, go ahead!",
   });
   if (result.isConfirmed) {
-    console.log("permission granted");
 
     Swal.fire("Done!", "State is now changed.", "success");
-    postbutton(element, avail);
+    postState(element, availiable);
   }
 }
 
-async function checkconfirm(element) {
+async function checkoutConfirm(element) {
   let result = await Swal.fire({
     title: "Are you sure?",
     text: "You are going to checkout this book",
@@ -51,15 +48,13 @@ async function checkconfirm(element) {
     confirmButtonText: "Yes, go ahead!",
   });
   if (result.isConfirmed) {
-    console.log("permission granted");
 
     Swal.fire("Done!", "Successful checkout.", "success");
-    console.log("postcheck called")
-    postcheck(element);
+    checkout(element);
   }
 }
 
-function postcheck(element) {
+function checkout(element) {
   console.log(element)
   const json = JSON.stringify({bookid: element});
   axios

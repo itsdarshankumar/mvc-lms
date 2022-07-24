@@ -6,156 +6,30 @@ use Bcrypt\Bcrypt;
 
 class Login
 {
-    public static function login($username, $pass)
+    public static function login($username)
     {
-        $bcrypt = new Bcrypt();
         $db = \DB::get_instance();
         $stmt = $db->prepare("SELECT * FROM users WHERE username = ?");
         $stmt->execute([$username]);
         $rows = $stmt->fetchAll();
         if ($rows) {
-            if ($bcrypt->verify($pass, $rows[0]["pass"])) {
-                return $rows;
-            }
+
+            return $rows;
         }
+
         return false;
     }
 
-    public static function get_all($role = 0, $search = NULL,)
-    {
-        $db = \DB::get_instance();
-        if ($search) {
-            $stmt = $db->prepare("SELECT * FROM books WHERE bookname = ?");
-            $stmt->execute([$search]);
-        } elseif ($role) {
-            $stmt = $db->prepare("SELECT * FROM books ORDER BY id DESC");
-            $stmt->execute();
-        } else {
-            $stmt = $db->prepare("SELECT * FROM books WHERE avail = 1 ORDER BY id DESC");
-            $stmt->execute();
-        }
-        $rows = $stmt->fetchAll();
-        return $rows;
-    }
 
-    public static function checkout($username, $bookid)
+
+    public static function signupentry($username, $email, $hash)
     {
+
+
         $db = \DB::get_instance();
-        $stmt = $db->prepare("SELECT * FROM books WHERE id = ? AND avail=1");
-        $stmt->execute([$bookid]);
-        if ($stmt->fetch()) {
-            $stmt = $db->prepare("SELECT * FROM requests WHERE username=? AND returned = 0 AND bookid=? AND (status=1 OR status=2)");
-            $stmt->execute([$username, $bookid]);
-            if ($stmt->fetchAll()) {
-                return false;
-            } else {
-                $stmt = $db->prepare("INSERT INTO requests(bookid,username,status,returned) VALUES(?,?,2,0)");
-                $stmt->execute([$bookid, $username]);
-                return true;
-            }
-        }
-        return false;
-    }
-    public static function addbook($bookname, $number)
-    {
-        $db = \DB::get_instance();
-        $stmt = $db->prepare("SELECT * FROM books WHERE bookname=?");
-        $stmt->execute([$bookname]);
-        $rows = $stmt->fetchAll();
-        if ($rows) {
-            $updatenumber = $number + $rows[0]["number"];
-            $stmt = $db->prepare("UPDATE books SET number=? WHERE bookname=?");
-            $stmt->execute([$updatenumber, $bookname]);
-            return false;
-        } else {
-            $stmt = $db->prepare("INSERT INTO books (bookname,number,avail) VALUES(?,?,1)");
-            $stmt->execute([$bookname, $number]);
-            return true;
-        }
-    }
-    public static function bookapprovalrender()
-    {
-        $db = \DB::get_instance();
-        $stmt = $db->prepare("SELECT * FROM requests WHERE status=2");
-        $stmt->execute();
-        $rows = $stmt->fetchAll();
-        return $rows;
-    }
-    public static function bookresolve($id, $status, $bookid, $username)
-    {
-        $db = \DB::get_instance();
-        if ($status == 1) {
-            $stmt = $db->prepare("SELECT * FROM books WHERE id=?");
-            $stmt->execute([$bookid]);
-            $rows = $stmt->fetchAll();
-            if ($rows[0]["number"] == 1) {
-                $stmt = $db->prepare("UPDATE books SET number=?,avail=0 WHERE id=?");
-                $stmt->execute([$rows[0]["number"] - 1, $bookid]);
-            } else {
-                $stmt = $db->prepare("UPDATE books SET number=? WHERE id=?");
-                $stmt->execute([$rows[0]["number"] - 1, $bookid]);
-            }
-        }
-        $stmt = $db->prepare("UPDATE requests SET status=?,resolveby=?,returned=0 WHERE id=?");
-        $stmt->execute([$status, $username, $id]);
+
+        $stmt = $db->prepare("INSERT INTO users (username,email,pass,role) VALUES (?,?,?,0)");
+        $stmt->execute([$username, $email, $hash]);
         return true;
-    }
-    public static function pastresolve($username)
-    {
-        $db = \DB::get_instance();
-        $stmt = $db->prepare("SELECT * FROM requests WHERE username=? ORDER BY id DESC");
-        $stmt->execute([$username]);
-        $rows = $stmt->fetchAll();
-        return $rows;
-    }
-    public static function userresolved($username)
-    {
-        $db = \DB::get_instance();
-        $stmt = $db->prepare("SELECT * FROM requests WHERE username=? ORDER BY id DESC");
-        $stmt->execute([$username]);
-        $rows = $stmt->fetchAll();
-        return $rows;
-    }
-    public static function updatebooks($id, $avail)
-    {
-        $db = \DB::get_instance();
-        $stmt = $db->prepare("UPDATE books SET avail=? WHERE id=?");
-        $stmt->execute([$avail, $id]);
-        return true;
-    }
-    public static function returnbooks($id, $bookid)
-    {
-        $db = \DB::get_instance();
-        $stmt = $db->prepare("SELECT * FROM books WHERE id=?");
-        $stmt->execute([$bookid]);
-        $rows = $stmt->fetchAll();
-        if ($rows[0]["number"] == 0) {
-            $stmt = $db->prepare("UPDATE books SET number=?,avail=1 WHERE id=?");
-            $stmt->execute([$rows[0]["number"] + 1, $bookid]);
-        } else {
-            $stmt = $db->prepare("UPDATE books SET number=? WHERE id=?");
-            $stmt->execute([$rows[0]["number"] + 1, $bookid]);
-        }
-        $stmt = $db->prepare("UPDATE requests SET returned=1 WHERE id=?");
-        $stmt->execute([$id]);
-        return true;
-    }
-    public static function signupentry($username, $email, $pass, $pass_repeat)
-    {
-        if ($pass == $pass_repeat) {
-            $bcrypt = new Bcrypt();
-            $bcrypt_version = '2a';
-            $hash = $bcrypt->encrypt($pass, $bcrypt_version);
-            $db = \DB::get_instance();
-            $stmt = $db->prepare("SELECT * FROM users WHERE username=?");
-            $stmt->execute([$username]);
-            if ($stmt->fetchAll()) {
-                return false;
-            } else {
-                $stmt = $db->prepare("INSERT INTO users (username,email,pass,role) VALUES (?,?,?,0)");
-                $stmt->execute([$username, $email, $hash]);
-                return true;
-            }
-        }
     }
 }

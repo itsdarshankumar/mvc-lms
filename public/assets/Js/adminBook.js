@@ -1,4 +1,4 @@
-function add() {
+function bookName() {
   (async () => {
     const { value: text } = await Swal.fire({
       input: "textarea",
@@ -16,11 +16,11 @@ function add() {
     });
 
     if (text) {
-      filter(text);
+      bookNumber(text);
     }
   })();
 }
-function searchto() {
+function searchBook() {
   (async () => {
     const { value: text } = await Swal.fire({
       input: "textarea",
@@ -37,12 +37,12 @@ function searchto() {
       },
     });
     if (text) {
-      window.location.href = "http://localhost:8000/book?search=" + text;
+      window.location.href = "/book?search=" + text;
     }
   })();
 }
 
-function filter(message) {
+function bookNumber(name) {
   (async () => {
     const { value: number } = await Swal.fire({
       title: "Number of Books?",
@@ -57,24 +57,24 @@ function filter(message) {
       inputValue: 25,
     });
     if (number) {
-      await swal.fire(`${number} books of ${message} were added!!`);
-      postmessage(message, number);
+      await swal.fire(`${number} books of ${name} were added!!`);
+      addBook(name, number);
     }
   })();
 }
 
-function postmessage(book, number) {
+function addBook(book, number) {
   const json = JSON.stringify({bookname: book,number : number})
   axios
     .post("/book/admin/add", json)
     .then((res) => {
-      window.location.href = "http://localhost:8000/book";
+      window.location.href = "/book";
       console.log(res);
     });
 }
 
-function posthistory() {
-  window.location.href="http://localhost:8000/book/history"
+function userHistory() {
+  window.location.href="/book/history"
 }
 
 

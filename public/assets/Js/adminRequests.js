@@ -1,26 +1,25 @@
-async function checkingId(element, bid) {
-  console.log(element);
-  await confirm(element, bid);
+async function denyId(element, bookID) {
+  await denyConfirm(element, bookID);
 }
-async function gettingId(element, bid) {
+async function acceptId(element, bookID) {
   console.log(element);
-  await checkconfirm(element, bid);
+  await acceptConfirm(element, bookID);
 }
 
-function postbutton(element, bid) {
+function denyPost(element, bookID) {
   axios
     .post("/book/admin", {
       id: element,
       status: 0,
-      bookid: bid,
+      bookid: bookID,
     })
     .then((res) => {
       console.log(res);
-      window.location.href = "http://localhost:8000/book/admin";
+      window.location.href = "/book/admin";
     });
 }
 
-async function confirm(element, bid) {
+async function denyConfirm(element, bookID) {
   let result = await Swal.fire({
     title: "Are you sure?",
     text: "You are declining this request",
@@ -31,14 +30,13 @@ async function confirm(element, bid) {
     confirmButtonText: "Yes, go ahead!",
   });
   if (result.isConfirmed) {
-    console.log("permission granted");
 
     Swal.fire("Done!", "Request declined", "success");
-    postbutton(element, bid);
+    denyPost(element, bookID);
   }
 }
 
-async function checkconfirm(element, bid) {
+async function acceptConfirm(element, bookID) {
   let result = await Swal.fire({
     title: "Are you sure?",
     text: "You are accepting this request",
@@ -52,25 +50,25 @@ async function checkconfirm(element, bid) {
     console.log("permission granted");
 
     Swal.fire("Done!", "Successful granted.", "success");
-    postcheck(element, bid);
+    acceptPost(element, bookID);
   }
 }
 
-function postcheck(element, bid) {
+function acceptPost(element, bookID) {
   console.log("request");
   axios
     .post("/book/admin", {
       id: element,
       status: 1,
-      bookid: bid,
+      bookid: bookID,
     })
     .then((res) => {
       console.log(res);
-      window.location.href = "http://localhost:8000/book/admin";
+      window.location.href = "/book/admin";
     });
 }
-document.getElementById("filter").addEventListener("click", searchto);
-function searchto() {
+document.getElementById("filter").addEventListener("click", requestSearch);
+function requestSearch() {
   (async () => {
     const { value: text } = await Swal.fire({
       input: "textarea",
@@ -88,7 +86,7 @@ function searchto() {
     });
     if (text) {
       window.location.href =
-        "http://localhost:8000/book/admin/history?username=" + text;
+        "/book/admin/history?username=" + text;
     }
   })();
 }
@@ -107,17 +105,17 @@ async function returned(element, bookin) {
     console.log("permission granted");
 
     Swal.fire("Done!", "Successful granted.", "success");
-    returnpost(element,bookin);
+    returnPost(element,bookin);
   }
 }
 
-function returnpost(element, bookin) {
+function returnPost(element, bookin) {
   axios
     .post("/book/admin/return", {
       id: element,
       bookid: bookin,
     })
     .then((res) => {
-      window.location.href = "http://localhost:8000/book/admin";
+      window.location.href = "/book/admin";
     });
 }

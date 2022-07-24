@@ -18,13 +18,13 @@
             type="button"
             class="btn btn-danger"
             id="btn"
-            onclick="checkingId({{req.id}},{{req.bookid}})"
+            onclick="denyId({{req.id}},{{req.bookid}})"
           >Deny</button>
           <button
             type="button"
             class="btn btn-success"
             id="btn"
-            onclick="gettingId({{req.id}},{{req.bookid}})"
+            onclick="acceptId({{req.id}},{{req.bookid}})"
           >Approve</button></td>
       {% endif %}
       {% if req.status == 0 %}

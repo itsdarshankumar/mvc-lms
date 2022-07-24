@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+
+    {% include("templates/head.twig") %}
+    <title>LMS</title>
+    <link rel="stylesheet" href="assets/css/Login-Form-Clean.css" />
+    <link rel="stylesheet" href="assets/css/Ludens-Users---2-Register.css" />
+    <link rel="stylesheet" href="assets/css/styles.css" />
+    <link rel="stylesheet" href="/assets/css/signup.css" />
+  </head>
+
+  <body style="background: var(--bs-gray)">
+    {% include("templates/navbar.twig") %}
+    {% block body %}{% endblock %}
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="/assets/Js/signup.js"></script>
+  </body>
+</html>
