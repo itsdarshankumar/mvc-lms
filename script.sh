@@ -12,7 +12,7 @@
 	echo 'DB_USERNAME:'
 	read DB_USERNAME
 	echo 'DB_PASSWORD:'
-	read DB_PASSWORD
+	read -s DB_PASSWORD
 
 	mysql -u $DB_USERNAME -p$DB_PASSWORD -e "CREATE DATABASE $DB_NAME;"
         
