@@ -1,49 +1,45 @@
 {% extends "templates/homelayout.twig" %}
 {% block body %}
 <button
-      type="button"
-      class="btn btn-info filter"
-      id="history"
-      onclick="confirmFilter()"
-    >Filter</button>
-
-<div class="header">History
-</div>
+   type="button"
+   class="btn btn-info filter"
+   id="history"
+   onclick="confirmFilter()"
+   >Filter</button>
+<div class="header">History</div>
 <table cellspacing="0">
-  <tr>
-    <th>Username</th>
-    <th>Book</th>
-    <th>Status</th>
-  </tr>
-  {% for row in history %}
-    <tr id={{row.id}}>
+   <tr>
+      <th>Username</th>
+      <th>Book</th>
+      <th>Status</th>
+   </tr>
+   {% for row in history %}
+   <tr id={{row.id}}>
       <td>{{row.username}}</td>
       <td>{{row.bookname}}</td>
       <td style="text-align:center">
-        {% if row.status == 2 %}
-          Pending
-        {% endif %}
-        {% if row.status == 1 %}
-          {% if row.returned == 1 %}
-            Returned
-          {% elseif row.returned == 0 %}
-            <button
+         {% if row.status == 2 %}
+         Pending
+         {% endif %}
+         {% if row.status == 1 %}
+         {% if row.returned == 1 %}
+         Returned
+         {% elseif row.returned == 0 %}
+         <button
             type="button"
             class="btn btn-success"
             id="btn"
             onclick="returnRequest({{row.id}})"
-          >Return</button>
-          {% else %}
-           Return req pending
-          {% endif %}
-        {% endif %}
-        {% if row.status == 0 %}
-          Rejected
-        {% endif %}
-
+            >Return</button>
+         {% else %}
+         Return req pending
+         {% endif %}
+         {% endif %}
+         {% if row.status == 0 %}
+         Rejected
+         {% endif %}
       </td>
-    </tr>
-  {% endfor %}
+   </tr>
+   {% endfor %}
 </table>
-
 {% endblock %}

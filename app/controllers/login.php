@@ -61,7 +61,7 @@ class Signup
             if ($rows) {
                 echo "error in signup";
             } else {
-                if (\Postlogin\Login::signupentry($username, $email, $hash)) {
+                if (\Postlogin\Login::signupEntry($username, $email, $hash)) {
                     header("Location: /");
                 } else {
                     echo "error in signup";

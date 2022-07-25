@@ -22,7 +22,7 @@ class Login
 
 
 
-    public static function signupentry($username, $email, $hash)
+    public static function signupEntry($username, $email, $hash)
     {
 
 

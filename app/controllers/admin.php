@@ -6,8 +6,8 @@ class Admin
 {
     public function get()
     {
-        \Utils\Auth::adminauth();
-        $rows = \Postlogin\Admindashboard::bookapprovalrender();
+        \Utils\Auth::adminAuth();
+        $rows = \Postlogin\Admindashboard::bookApprovalRender();
 
             echo \View\Loader::make()->render("templates/requests.twig", array(
                 "requests" => $rows
@@ -17,7 +17,7 @@ class Admin
 
     public function post()
     {
-        \Utils\Auth::adminauth();
+        \Utils\Auth::adminAuth();
         $_POST = json_decode(file_get_contents("php://input"), true);
         $id = $_POST["id"];
         $status = $_POST["status"];
@@ -25,11 +25,11 @@ class Admin
         session_start();
         $username = $_SESSION["username"];
         if ($status == 1) {
-            $rows = \Postlogin\Admindashboard::bookSearchbyid($bookid);
+            $rows = \Postlogin\Admindashboard::bookSearchbyId($bookid);
             if ($rows[0]["number"] == 1) {
                 \Postlogin\Admindashboard::finishedBook($bookid);
             } else {
-                \Postlogin\Admindashboard::updateBooknumber($rows[0]["number"] - 1, $bookid);
+                \Postlogin\Admindashboard::updateBookNumber($rows[0]["number"] - 1, $bookid);
             }
         }
         if (\Postlogin\Admindashboard::requestResolve($id, $status, $username)) {
@@ -43,20 +43,20 @@ class Adminadd
 {
     public function post()
     {
-        \Utils\Auth::adminauth();
+        \Utils\Auth::adminAuth();
         $_POST = json_decode(file_get_contents("php://input"), true);
         $bookname = $_POST["bookname"];
         $number = $_POST["number"];
         $rows = \Postlogin\Dashboard::bookSearch($bookname);
         if ($rows) {
             $updatenumber = $number + $rows[0]["number"];
-            if (\Postlogin\Admindashboard::updateBooknumber($updatenumber, $rows[0]["id"])) {
+            if (\Postlogin\Admindashboard::updateBookNumber($updatenumber, $rows[0]["id"])) {
                 echo "book added";
             } else {
                 echo "some error in book addition";
             }
         } else {
-            if ((\Postlogin\Admindashboard::addbook($bookname, $number))) {
+            if ((\Postlogin\Admindashboard::addBook($bookname, $number))) {
                 echo "book added";
             } else {
                 echo "some error in book addition";
@@ -69,9 +69,9 @@ class Adminhistory
 {
     public function get()
     {
-        \Utils\Auth::adminauth();
+        \Utils\Auth::adminAuth();
         $username = $_GET['username'];
-        $rows = \Postlogin\Admindashboard::pastresolve($username);
+        $rows = \Postlogin\Admindashboard::pastResolve($username);
         if ($rows) {
             echo \View\Loader::make()->render("templates/requests.twig", array(
                 "requests" => $rows
@@ -86,11 +86,11 @@ class Adminupdate
 {
     public function post()
     {
-        \Utils\Auth::adminauth();
+        \Utils\Auth::adminAuth();
         $_POST = json_decode(file_get_contents("php://input"), true);
         $id = $_POST["id"];
         $avail = $_POST["avail"];
-        if (\Postlogin\Admindashboard::updatebooks($id, $avail)) {
+        if (\Postlogin\Admindashboard::updateBooks($id, $avail)) {
             echo "book state changed";
         } else {
             echo "error in changing state";
@@ -101,17 +101,17 @@ class Adminreturn
 {
     public function post()
     {
-        \Utils\Auth::adminauth();
+        \Utils\Auth::adminAuth();
         $_POST = json_decode(file_get_contents("php://input"), true);
         $id = $_POST["id"];
         $bookid = $_POST["bookid"];
-        $rows = \Postlogin\Admindashboard::bookSearchbyid($bookid);
+        $rows = \Postlogin\Admindashboard::bookSearchbyId($bookid);
         if ($rows[0]["number"] == 0) {
             \Postlogin\Admindashboard::updateFinishedbook($rows[0]["number"] + 1, $bookid);
         } else {
-            \Postlogin\Admindashboard::updateBooknumber($rows[0]["number"] + 1, $bookid);
+            \Postlogin\Admindashboard::updateBookNumber($rows[0]["number"] + 1, $bookid);
         }
-        if (\Postlogin\Admindashboard::returnbooks($id)) {
+        if (\Postlogin\Admindashboard::returnBooks($id)) {
             echo "returned";
         } else {
             echo "error in returning";

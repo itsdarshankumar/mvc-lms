@@ -7,10 +7,8 @@ class Dashboard
     public static function userDashboard($search = NULL,)
     {
         $db = \DB::get_instance();
-
         $stmt = $db->prepare("SELECT * FROM books WHERE avail = 1 ORDER BY id DESC");
         $stmt->execute();
-
         $rows = $stmt->fetchAll();
         return $rows;
     }
@@ -42,7 +40,7 @@ class Dashboard
         }
         return false;
     }
-    public static function checkAvailiabilityforuser($username, $bookid)
+    public static function checkAvailiabilityForUser($username, $bookid)
     {
         $db = \DB::get_instance();
         $stmt = $db->prepare("SELECT * FROM requests WHERE username=? AND returned = 0 AND bookid=? AND (status=1 OR status=2)");
@@ -54,7 +52,7 @@ class Dashboard
     }
 
 
-    public static function userresolved($username)
+    public static function userResolved($username)
     {
         $db = \DB::get_instance();
         $stmt = $db->prepare("SELECT requests.bookid,requests.username,requests.status,requests.returned,books.bookname,requests.id FROM requests INNER JOIN books ON requests.bookid=books.id WHERE username=? ORDER BY requests.id DESC");
@@ -62,7 +60,7 @@ class Dashboard
         $rows = $stmt->fetchAll();
         return $rows;
     }
-    public static function userresolvedfilter($username, $filter)
+    public static function userResolvedFilter($username, $filter)
     {
         $db = \DB::get_instance();
         $stmt = $db->prepare("SELECT requests.bookid,requests.username,requests.status,requests.returned,books.bookname,requests.id  FROM requests INNER JOIN books ON requests.bookid=books.id WHERE username=? AND requests.status=? ORDER BY requests.id DESC");

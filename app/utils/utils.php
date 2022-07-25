@@ -5,7 +5,7 @@ namespace Utils;
 class Auth
 {
 
-    public static function userauth()
+    public static function userAuth()
     {
         session_start();
         if ($_SESSION["username"] && $_SESSION["role"] == 0) {
@@ -15,7 +15,7 @@ class Auth
             die();
         }
     }
-    public static function adminauth()
+    public static function adminAuth()
     {
         session_start();
         if ($_SESSION["username"] && $_SESSION["role"] == 1) {

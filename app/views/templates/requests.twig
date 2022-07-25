@@ -1,50 +1,49 @@
 {% extends "templates/reqlayout.twig" %}
-
 {% block body %}
-<div class="header">Pending Requests
-</div>
+<div class="header">Pending Requests</div>
 <table cellspacing="0">
-  <tr>
-    <th>Username</th>
-    <th>Book</th>
-    <th></th>
-  </tr>
-  {% for req in requests %}
-    <tr id={{req.id}}>
+   <tr>
+      <th>Username</th>
+      <th>Book</th>
+      <th></th>
+   </tr>
+   {% for req in requests %}
+   <tr id={{req.id}}>
       <td>{{req.username}}</td>
       <td>{{req.bookname}}</td>
       {% if req.status == 2 %}
-        <td id="action"><button
-            type="button"
-            class="btn btn-danger"
-            id="btn"
-            onclick="denyId({{req.id}},{{req.bookid}})"
-          >Deny</button>
-          <button
+      <td id="action"><button
+         type="button"
+         class="btn btn-danger"
+         id="btn"
+         onclick="denyId({{req.id}},{{req.bookid}})"
+         >Deny</button>
+         <button
             type="button"
             class="btn btn-success"
             id="btn"
             onclick="acceptId({{req.id}},{{req.bookid}})"
-          >Approve</button></td>
+            >Approve</button>
+      </td>
       {% endif %}
       {% if req.status == 0 %}
-        <td style="text-align: center;">Denied</td>
+      <td style="text-align: center;">Denied</td>
       {% endif %}
       {% if req.status == 1 %}
-        {% if req.returned == 1 %}
-          <td style="text-align: center;">Returned</td>
-        {% elseif req.returned == 2 %}
-          <td id="action"><button
-              type="button"
-              class="btn btn-success"
-              id="btn"
-              onclick="returned({{req.id}},{{req.bookid}})"
-            >Return</button></td>
-            {% elseif req.returned == 0 %}
-            <td style="text-align: center;">Accepted</td>
-        {% endif %}
+      {% if req.returned == 1 %}
+      <td style="text-align: center;">Returned</td>
+      {% elseif req.returned == 2 %}
+      <td id="action"><button
+         type="button"
+         class="btn btn-success"
+         id="btn"
+         onclick="returned({{req.id}},{{req.bookid}})"
+         >Return</button></td>
+      {% elseif req.returned == 0 %}
+      <td style="text-align: center;">Accepted</td>
       {% endif %}
-    </tr>
-  {% endfor %}
+      {% endif %}
+   </tr>
+   {% endfor %}
 </table>
 {% endblock %}

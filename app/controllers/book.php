@@ -24,13 +24,13 @@ class Book
     }
     public function post()
     {
-        \Utils\Auth::userauth();
+        \Utils\Auth::userAuth();
         session_start();
         $_POST = json_decode(file_get_contents("php://input"), true);
         $bookid = $_POST["bookid"];
         $username = $_SESSION["username"];
         if (\Postlogin\Dashboard::bookAvailiability($bookid)) {
-            if (\Postlogin\Dashboard::checkAvailiabilityforuser($username, $bookid)) {
+            if (\Postlogin\Dashboard::checkAvailiabilityForUser($username, $bookid)) {
 
                 if (\Postlogin\Dashboard::checkout($username, $bookid)) {
                     echo "Checkout successfull";
@@ -49,18 +49,18 @@ class History
 {
     public function get()
     {
-        \Utils\Auth::userauth();
+        \Utils\Auth::userAuth();
         $filter = $_GET['filter'];
         session_start();
         $username = $_SESSION["username"];
         if ($filter != NULL) {
             if ($filter != 3) {
-                $rows = \Postlogin\Dashboard::userresolvedfilter($username, $filter);
+                $rows = \Postlogin\Dashboard::userResolvedFilter($username, $filter);
             } else {
                 $rows = \Postlogin\Dashboard::returnedBooks($username);
             }
         } else {
-            $rows = \Postlogin\Dashboard::userresolved($username);
+            $rows = \Postlogin\Dashboard::userResolved($username);
         }
 
         echo \View\Loader::make()->render("templates/history.twig", array(
@@ -72,7 +72,7 @@ class Returnrequest
 {
     public function post()
     {
-        \Utils\Auth::userauth();
+        \Utils\Auth::userAuth();
         $_POST = json_decode(file_get_contents("php://input"), true);
         $id = $_POST["id"];
         \Postlogin\Dashboard::returnRequest($id);
