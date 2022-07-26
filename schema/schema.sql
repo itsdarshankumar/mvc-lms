@@ -37,7 +37,7 @@ CREATE TABLE `books` (
 
 LOCK TABLES `books` WRITE;
 /*!40000 ALTER TABLE `books` DISABLE KEYS */;
-INSERT INTO `books` VALUES (2,'Harry Potter',256,1),(3,'aise hi',67,1),(4,'test',25,0),(5,'Perks of being a wallflower',2,1),(6,'hello',9,1),(7,'Adding book',22,1),(8,'test add book php',0,0),(9,'finaltest',1,1);
+INSERT INTO `books` VALUES (2,'Harry Potter',255,1),(3,'aise hi',67,1),(4,'test',25,0),(5,'Perks of being a wallflower',2,1),(6,'hello',9,1),(7,'Adding book',21,1),(8,'test add book php',0,0),(9,'finaltest',72,1);
 /*!40000 ALTER TABLE `books` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -58,7 +58,7 @@ CREATE TABLE `requests` (
   PRIMARY KEY (`id`),
   KEY `bookid` (`bookid`),
   CONSTRAINT `requests_ibfk_1` FOREIGN KEY (`bookid`) REFERENCES `books` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -67,7 +67,7 @@ CREATE TABLE `requests` (
 
 LOCK TABLES `requests` WRITE;
 /*!40000 ALTER TABLE `requests` DISABLE KEYS */;
-INSERT INTO `requests` VALUES (22,2,'youknowme',1,1,'horizon'),(29,5,'youknowme',0,0,'horizon'),(30,3,'youknowme',0,0,'horizon'),(32,8,'youknowme',1,1,'horizon'),(33,8,'youknowme',1,1,'horizon'),(34,9,'youknowme',1,1,'horizon'),(35,7,'youknowme',1,1,'horizon'),(40,7,'youknowme',1,1,'horizon');
+INSERT INTO `requests` VALUES (22,2,'youknowme',1,1,'horizon'),(29,5,'youknowme',0,0,'horizon'),(30,3,'youknowme',0,0,'horizon'),(32,8,'youknowme',1,1,'horizon'),(33,8,'youknowme',1,1,'horizon'),(34,9,'youknowme',1,1,'horizon'),(35,7,'youknowme',1,1,'horizon'),(40,7,'youknowme',1,1,'horizon'),(43,2,'youknowme',1,2,'horizon'),(44,7,'abc',0,0,'horizon'),(45,7,'youknowme',1,0,'horizon');
 /*!40000 ALTER TABLE `requests` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -85,7 +85,7 @@ CREATE TABLE `users` (
   `pass` varchar(256) DEFAULT NULL,
   `role` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -107,4 +107,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-07-25  2:17:25
+-- Dump completed on 2022-07-26 19:16:59

@@ -82,4 +82,11 @@ class Dashboard
         $stmt->execute([$id]);
         return true;
     }
+    public static function myBooks($username){
+        $db = \DB::get_instance();
+        $stmt = $db->prepare("SELECT requests.bookid,requests.username,requests.status,requests.returned,books.bookname,requests.id  FROM requests INNER JOIN books ON requests.bookid=books.id WHERE username=? AND requests.status=1 AND requests.returned=0 ORDER BY requests.id DESC LIMIT 5 ");
+        $stmt->execute([$username]);
+        $rows = $stmt->fetchAll();
+        return $rows;
+    }
 }

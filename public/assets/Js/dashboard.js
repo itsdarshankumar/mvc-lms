@@ -5,20 +5,6 @@ async function getId(element) {
   await checkoutConfirm(element);
 }
 
-function postState(element, availiable) {
-  if (availiable) {
-    availiable = 0;
-  } else {
-    availiable = 1;
-  }
-  const json = JSON.stringify({id: element,avail:availiable});
-  axios
-    .post("/book/admin/update",json)
-    .then((res) => {
-      console.log(res);
-      window.location.href = "/book";
-    });
-}
 
 async function confirm(element, availiable) {
   let result = await Swal.fire({
@@ -32,8 +18,24 @@ async function confirm(element, availiable) {
   });
   if (result.isConfirmed) {
 
-    Swal.fire("Done!", "State is now changed.", "success");
-    postState(element, availiable);
+    if (availiable) {
+      availiable = 0;
+    } else {
+      availiable = 1;
+    }
+    const json = JSON.stringify({id: element,avail:availiable});
+    axios
+      .post("/book/admin/update",json)
+      .then((res) => {
+        if(res.data != 'error'){
+        Swal.fire("Done!", "State is now changed.", "success");
+        window.location.href = "/book";
+      }
+      else{
+        Swal.fire ('Incorrect...','Book is exhausted!!', 'error')
+      }
+    });
+
   }
 }
 

@@ -26,7 +26,7 @@ class Admindashboard
         $stmt->execute([$id]);
         return true;
     }
-    public static function updateFinishedbook($number, $bookid)
+    public static function updateFinishedBook($number, $bookid)
     {
         $db = \DB::get_instance();
         $stmt = $db->prepare("UPDATE books SET number=?,avail=1 WHERE id=?");

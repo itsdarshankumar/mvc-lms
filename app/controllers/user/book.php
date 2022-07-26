@@ -10,17 +10,27 @@ class Book
         session_start();
         $search = $_GET['search'];
         $role = $_SESSION["role"];
+        $username = $_SESSION["username"];
         if ($search) {
             $rows = \Postlogin\Dashboard::bookSearch($search);
         } elseif ($role) {
             $rows = \Postlogin\Admindashboard::adminDashboard();
         } else {
             $rows = \Postlogin\Dashboard::userDashboard($search);
+            $myBooks=\Postlogin\Dashboard::myBooks($username);
         }
+        if($role){
+            echo \View\Loader::make()->render("templates/adminhome.twig", array(
+                "books" => $rows,
+                "role"  => $_SESSION["role"]
+            ));
+        }
+        else{
         echo \View\Loader::make()->render("templates/home.twig", array(
             "books" => $rows,
-            "role"  => $_SESSION["role"]
-        ));
+            "role"  => $_SESSION["role"],
+            "mybooks" => $myBooks
+        ));}
     }
     public function post()
     {
@@ -43,39 +53,5 @@ class Book
         } else {
             echo "error";
         }
-    }
-}
-class History
-{
-    public function get()
-    {
-        \Utils\Auth::userAuth();
-        $filter = $_GET['filter'];
-        session_start();
-        $username = $_SESSION["username"];
-        if ($filter != NULL) {
-            if ($filter != 3) {
-                $rows = \Postlogin\Dashboard::userResolvedFilter($username, $filter);
-            } else {
-                $rows = \Postlogin\Dashboard::returnedBooks($username);
-            }
-        } else {
-            $rows = \Postlogin\Dashboard::userResolved($username);
-        }
-
-        echo \View\Loader::make()->render("templates/history.twig", array(
-            "history" => $rows
-        ));
-    }
-}
-class Returnrequest
-{
-    public function post()
-    {
-        \Utils\Auth::userAuth();
-        $_POST = json_decode(file_get_contents("php://input"), true);
-        $id = $_POST["id"];
-        \Postlogin\Dashboard::returnRequest($id);
-        echo 'return requested';
     }
 }

@@ -1,0 +1,44 @@
+{% extends "templates/homelayout.twig" %}
+{% block title %}Books{% endblock %}
+{% block request %}           
+<li class="nav-item"><a
+   class="nav-link"
+   href="/book/admin"
+   >Requests</a></li>
+{% endblock %}
+{% block body %}
+<button type="button" class="btn btn-primary add" id="add" onclick="bookName()">ADD</button>
+<button
+   type="button"
+   class="btn btn-info filter"
+   id="filter"
+   onclick="searchBook()"
+   >Search</button>
+<div class="table-users">
+<div class="header">Books</div>
+<table cellspacing="0">
+<tr>
+   <th>Name</th>
+   <th>Number</th>
+   <th>Availiability</th>
+   <th></th>
+</tr>
+{% for book in books %} 
+<tr id={{book.id}}>
+   <td>{{book.bookname}}</td>
+   <td>{{book.number}}</td>
+   {% if book.avail %}
+   <td>Availiable</td>
+   {% else %}
+   <td>Unavailiable</td>
+   {% endif %}
+   <td id="action"><button
+      type="button"
+      class="btn btn-danger"
+      id="btn"
+      onclick="checkId({{book.id}},{{book.avail}})"
+      >Change State</button>
+   </td>
+</tr>
+{% endfor %}
+{% endblock %}

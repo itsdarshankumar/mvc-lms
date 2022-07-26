@@ -1,63 +1,53 @@
 {% extends "templates/homelayout.twig" %}
-{% block title %}Books{% endblock %}
-{% block request %} 
-{% if role %}           
-<li class="nav-item"><a
-   class="nav-link"
-   href="/book/admin"
-   >Requests</a></li>
-{% endif %}
+{% block title %}Books
 {% endblock %}
 {% block body %}
-{% if role %}
-<button type="button" class="btn btn-primary add" id="add" onclick="bookName()">ADD</button>
-{% else %}
-<button
-   type="button"
-   class="btn btn-info filter"
-   id="history"
-   onclick="userHistory()"
-   >History</button>
-{% endif %} 
-<button
-   type="button"
-   class="btn btn-info filter"
-   id="filter"
-   onclick="searchBook()"
-   >Search</button>
-<div class="table-users">
-<div class="header">Books</div>
-<table cellspacing="0">
-<tr>
-   <th>Name</th>
-   <th>Number</th>
-   <th>Availiability</th>
-   <th></th>
-</tr>
-{% for book in books %} 
-<tr id={{book.id}}>
-   <td>{{book.bookname}}</td>
-   <td>{{book.number}}</td>
-   {% if book.avail %}
-   <td>Availiable</td>
-   {% else %}
-   <td>Unavailiable</td>
-   {% endif %}
-   <td id="action">{% if role %}<button
-      type="button"
-      class="btn btn-danger"
-      id="btn"
-      onclick="checkId({{book.id}},{{book.avail}})"
-      >Change State</button>
-      {% elseif book.avail %}
-      <button
-         type="button"
-         class="btn btn-success"
-         id="btn"
-         onclick="getId({{book.id}})"
-         >Checkout</button>
-      {% endif %}
-   </td>
-</tr>
-{% endfor %}
+	<button type="button" class="btn btn-info filter" id="history" onclick="userHistory()">History</button>
+	<button type="button" class="btn btn-info filter" id="filter" onclick="searchBook()">Search</button>
+	<div class="table-users">
+		<div class="header">Books</div>
+		<table cellspacing="0">
+			<tr>
+				<th>Name</th>
+				<th>Number</th>
+				<th>Availiability</th>
+				<th></th>
+			</tr>
+			{% for book in books %}
+				<tr id={{book.id}}>
+					<td>{{book.bookname}}</td>
+					<td>{{book.number}}</td>
+					{% if book.avail %}
+						<td>Availiable</td>
+					{% else %}
+						<td>Unavailiable</td>
+					{% endif %}
+					<td id="action">
+						{% if book.avail %}
+							<button type="button" class="btn btn-success" id="btn" onclick="getId({{book.id}})">Checkout</button>
+						{% endif %}
+					</td>
+				</tr>
+			{% endfor %}
+		</table>
+	</div>
+	<div class="table-users">
+		<div class="header">My Books</div>
+		<table cellspacing="0">
+			<tr>
+				<th>Name</th>
+				<th></th>
+			</tr>
+			{% for row in mybooks %}
+				<tr id={{row.id}}>
+					<td>{{row.bookname}}</td>
+					<td style="text-align:center">
+						{% if row.returned == 0 %}
+							<button type="button" class="btn btn-success" id="btn" onclick="returnRequest({{row.id}})">Return</button>
+						{% endif %}
+					</td>
+				</tr>
+			{% endfor %}
+		</table>
+	</div>
 {% endblock %}
