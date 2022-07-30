@@ -14,9 +14,9 @@
 	echo 'DB_PASSWORD:'
 	read -s DB_PASSWORD
 
-	mysql -u $DB_USERNAME -p$DB_PASSWORD -e "CREATE DATABASE $DB_NAME;"
+	MYSQL_PWD=$DB_PASSWORD mysql -u $DB_USERNAME -e "CREATE DATABASE $DB_NAME;"
         
-    mysql -u $DB_USERNAME -p$DB_PASSWORD "$DB_NAME"<./schema/schema.sql
+    MYSQL_PWD=$DB_PASSWORD mysql -u $DB_USERNAME "$DB_NAME"<./schema/schema.sql
 
 	touch config/config.php
 	echo '<?php'>config/config.php
