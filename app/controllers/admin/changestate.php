@@ -6,6 +6,7 @@ namespace Controller;
 
 class Adminupdate
 {
+    
     public function post()
     {
         \Utils\Auth::adminAuth();

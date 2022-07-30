@@ -4,6 +4,7 @@ namespace Postlogin;
 
 class Dashboard
 {
+   
     public static function userDashboard($search = NULL,)
     {
         $db = \DB::get_instance();
@@ -12,6 +13,7 @@ class Dashboard
         $rows = $stmt->fetchAll();
         return $rows;
     }
+
 
     public static function bookSearch($search)
     {
@@ -30,6 +32,8 @@ class Dashboard
         $stmt->execute([$bookid, $username]);
         return true;
     }
+
+
     public static function bookAvailiability($bookid)
     {
         $db = \DB::get_instance();
@@ -40,6 +44,8 @@ class Dashboard
         }
         return false;
     }
+
+
     public static function checkAvailiabilityForUser($username, $bookid)
     {
         $db = \DB::get_instance();
@@ -60,6 +66,8 @@ class Dashboard
         $rows = $stmt->fetchAll();
         return $rows;
     }
+
+
     public static function userResolvedFilter($username, $filter)
     {
         $db = \DB::get_instance();
@@ -68,6 +76,8 @@ class Dashboard
         $rows = $stmt->fetchAll();
         return $rows;
     }
+
+
     public static function returnedBooks($username)
     {
         $db = \DB::get_instance();
@@ -76,12 +86,16 @@ class Dashboard
         $rows = $stmt->fetchAll();
         return $rows;
     }
+
+
     public static function returnRequest($id){
         $db = \DB::get_instance();
         $stmt = $db->prepare("UPDATE requests SET returned=2 WHERE id=?");
         $stmt->execute([$id]);
         return true;
     }
+
+
     public static function myBooks($username){
         $db = \DB::get_instance();
         $stmt = $db->prepare("SELECT requests.bookid,requests.username,requests.status,requests.returned,books.bookname,requests.id  FROM requests INNER JOIN books ON requests.bookid=books.id WHERE username=? AND requests.status=1 AND requests.returned=0 ORDER BY requests.id DESC LIMIT 5 ");
@@ -89,4 +103,6 @@ class Dashboard
         $rows = $stmt->fetchAll();
         return $rows;
     }
+
+    
 }

@@ -6,6 +6,8 @@ use Bcrypt\Bcrypt;
 
 class Login
 {
+
+
     public static function login($username)
     {
         $db = \DB::get_instance();
@@ -32,4 +34,6 @@ class Login
         $stmt->execute([$username, $email, $hash]);
         return true;
     }
+
+    
 }

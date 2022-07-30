@@ -5,6 +5,8 @@ namespace Controller;
 
 class Admin
 {
+
+
     public function get()
     {
         \Utils\Auth::adminAuth();
@@ -16,6 +18,7 @@ class Admin
         
     }
 
+    
     public function post()
     {
         \Utils\Auth::adminAuth();

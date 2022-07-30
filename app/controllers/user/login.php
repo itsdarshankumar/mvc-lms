@@ -6,6 +6,8 @@ use Bcrypt\Bcrypt;
 
 class Login
 {
+
+
     public function get()
     {
         session_start();
@@ -17,6 +19,7 @@ class Login
         }
     }
 
+    
     public function post()
     {
         $username = $_POST["username"];

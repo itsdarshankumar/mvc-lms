@@ -5,6 +5,7 @@ namespace Controller;
 
 class Adminhistory
 {
+    
     public function get()
     {
         \Utils\Auth::adminAuth();

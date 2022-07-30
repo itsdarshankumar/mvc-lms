@@ -4,6 +4,8 @@ namespace Controller;
 
 class Book
 {
+
+
     public function get()
     {
         \Utils\Auth::user();
@@ -32,6 +34,7 @@ class Book
             "mybooks" => $myBooks
         ));}
     }
+    
     public function post()
     {
         \Utils\Auth::userAuth();

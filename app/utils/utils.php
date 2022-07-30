@@ -15,6 +15,8 @@ class Auth
             die();
         }
     }
+
+
     public static function adminAuth()
     {
         session_start();
@@ -25,6 +27,8 @@ class Auth
             die();
         }
     }
+
+
     public static function user()
     {
         session_start();
@@ -35,5 +39,6 @@ class Auth
             die();
         }
     }
+
 }
 

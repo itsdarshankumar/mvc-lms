@@ -8,10 +8,14 @@ use Bcrypt\Bcrypt;
 
 class Signup
 {
+
+
     public function get()
     {
         echo \View\Loader::make()->render("templates/signup.twig");
     }
+
+    
     public function post()
     {
         $bcrypt = new Bcrypt();

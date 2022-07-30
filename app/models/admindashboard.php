@@ -4,6 +4,8 @@ namespace Postlogin;
 
 class Admindashboard
 {
+
+
     public static function adminDashboard()
     {
         $db = \DB::get_instance();
@@ -12,6 +14,8 @@ class Admindashboard
         $rows = $stmt->fetchAll();
         return $rows;
     }
+
+
     public static function updateBooks($id, $avail)
     {
         $db = \DB::get_instance();
@@ -19,6 +23,8 @@ class Admindashboard
         $stmt->execute([$avail, $id]);
         return true;
     }
+
+
     public static function returnBooks($id)
     {
         $db = \DB::get_instance();
@@ -26,6 +32,8 @@ class Admindashboard
         $stmt->execute([$id]);
         return true;
     }
+
+
     public static function updateFinishedBook($number, $bookid)
     {
         $db = \DB::get_instance();
@@ -33,6 +41,8 @@ class Admindashboard
         $stmt->execute([$number, $bookid]);
         return true;
     }
+
+
     public static function updateBookNumber($number, $bookid)
     {
         $db = \DB::get_instance();
@@ -40,6 +50,8 @@ class Admindashboard
         $stmt->execute([$number, $bookid]);
         return true;
     }
+
+
     public static function bookSearchbyId($bookid)
     {
         $db = \DB::get_instance();
@@ -48,6 +60,8 @@ class Admindashboard
         $rows = $stmt->fetchAll();
         return $rows;
     }
+
+
     public static function addBook($bookname, $number)
     {
         $db = \DB::get_instance();
@@ -55,6 +69,7 @@ class Admindashboard
         $stmt->execute([$bookname, $number]);
         return true;
     }
+
 
     public static function bookApprovalRender()
     {
@@ -65,6 +80,7 @@ class Admindashboard
         return $rows;
     }
 
+
     public static function finishedBook($bookid)
     {
         $db = \DB::get_instance();
@@ -72,6 +88,8 @@ class Admindashboard
         $stmt->execute([0, $bookid]);
         return true;
     }
+
+
     public static function requestResolve($id, $status, $username)
     {
         $db = \DB::get_instance();
@@ -79,6 +97,8 @@ class Admindashboard
         $stmt->execute([$status, $username, $id]);
         return true;
     }
+
+
     public static function pastResolve($username)
     {
         $db = \DB::get_instance();
@@ -87,4 +107,6 @@ class Admindashboard
         $rows = $stmt->fetchAll();
         return $rows;
     }
+
+    
 }

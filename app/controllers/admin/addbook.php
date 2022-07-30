@@ -5,6 +5,7 @@ namespace Controller;
 
 class Adminadd
 {
+    
     public function post()
     {
         \Utils\Auth::adminAuth();

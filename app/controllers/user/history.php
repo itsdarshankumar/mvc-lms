@@ -3,6 +3,13 @@
 namespace Controller;
 
 
+abstract class Filter {
+    const Rejected	= 0;
+    const Accepted 	= 1;
+    const Pending	= 2;
+    const Returned 	= 3;
+}
+
 class History
 {
     public function get()
@@ -11,8 +18,10 @@ class History
         $filter = $_GET['filter'];
         session_start();
         $username = $_SESSION["username"];
+
+        
         if ($filter != NULL) {
-            if ($filter != 3) {
+            if ($filter != \Controller\Filter :: Returned) {
                 $rows = \Postlogin\Dashboard::userResolvedFilter($username, $filter);
             } else {
                 $rows = \Postlogin\Dashboard::returnedBooks($username);

@@ -5,6 +5,8 @@ namespace Controller;
 
 class Logout
 {
+
+    
     public function get()
     {
         session_start();
