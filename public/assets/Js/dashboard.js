@@ -66,16 +66,17 @@ async function checkoutConfirm(element) {
 }
 
 
+
 function confirmFilter(){
   (async () => {
 
     const inputOptions = new Promise((resolve) => {
       setTimeout(() => {
         resolve({
-          1:'Accepted',
-          3:'Returned',
           0:'Rejected',
-          2:'Pending'
+          1:'Accepted',
+          2:'Pending',
+          3:'Returned'
         })
       }, 0)
     })
