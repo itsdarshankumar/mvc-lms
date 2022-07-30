@@ -47,16 +47,16 @@ function bookNumber(name) {
     const { value: number } = await Swal.fire({
       title: "Number of Books?",
       icon: "question",
-      input: "range",
+      input: "number",
       inputLabel: "Number",
       inputAttributes: {
         min: 1,
-        max: 200,
+        max: 2000,
         step: 1,
       },
       inputValue: 25,
     });
-    if (number) {
+    if (number > 0) {
       await swal.fire(`${number} books of ${name} were added!!`);
       addBook(name, number);
     }
