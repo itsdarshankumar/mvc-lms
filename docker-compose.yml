@@ -1,0 +1,23 @@
+version: "3"
+
+services:
+  db:
+    container_name: mvc-db
+    image: mysql:latest
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=mvc
+    volumes:
+      - ./schema/schema.sql:/docker-entrypoint-initdb.d/     myc-schema.sql
+      - db-data:/var/lib/mysql
+  app:
+    container_name: mvc-app
+    build: .
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+
+volumes:
+  db-data:
+    name: mvc-db
